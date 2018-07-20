@@ -1,24 +1,24 @@
 # CameraApplication
 This Project is written in C# which allows user to interact with the cameras,save the records and export it to DB
-##Getting Started
+## Getting Started
 TODO
-##prerequisites
-TODO
-'''
+## prerequisites
 TODO
 '''
-##Installing 
 TODO
-#Running tests
+'''
+## Installing 
 TODO
-##Deployment 
+# Running tests
 TODO
-##Contributing
+## Deployment 
 TODO
-#Authors
+## Contributing
 TODO
-#License
+# Authors
 TODO
-#Acknowledgment
+# License
+TODO
+# Acknowledgment
 
 
