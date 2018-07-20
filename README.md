@@ -4,9 +4,9 @@ This Project is written in C# which allows user to interact with the cameras,sav
 TODO
 ## prerequisites
 TODO
-'''
+```
 TODO
-'''
+```
 ## Installing 
 TODO
 # Running tests
