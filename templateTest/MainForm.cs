@@ -10,7 +10,6 @@ namespace templateTest
     {
         // for pick an item 
         // for camera 
-        private ImageViewerControl imageViewerControl;
         private Item selectedItem;
 
         public MainForm()
@@ -58,7 +57,6 @@ namespace templateTest
             }
 
         }
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 

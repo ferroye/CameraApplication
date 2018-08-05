@@ -44,9 +44,11 @@
             this.checkBoxDigitalZoom = new System.Windows.Forms.CheckBox();
             this.buttonLiftMask = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -56,12 +58,44 @@
             this.buttonUp = new System.Windows.Forms.Button();
             this.buttonleft = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.export_groupBox = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
+            this.buttonDestination = new System.Windows.Forms.Button();
+            this.dateTimePickerStart = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.labelError = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.buttonExport = new System.Windows.Forms.Button();
+            this.radioButtonMKV = new System.Windows.Forms.RadioButton();
+            this.radioButtonAVI = new System.Windows.Forms.RadioButton();
+            this.groupBoxDbSettings = new System.Windows.Forms.GroupBox();
+            this.checkBoxIncludeBookmark = new System.Windows.Forms.CheckBox();
+            this.checkBoxReExport = new System.Windows.Forms.CheckBox();
+            this.textBoxEncryptPassword = new System.Windows.Forms.TextBox();
+            this.checkBoxEncrypt = new System.Windows.Forms.CheckBox();
+            this.checkBoxSign = new System.Windows.Forms.CheckBox();
+            this.radioButtonBLK = new System.Windows.Forms.RadioButton();
+            this.radioButtonPIC = new System.Windows.Forms.RadioButton();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBoxSampleRate = new System.Windows.Forms.ComboBox();
+            this.textBoxVideoFilename = new System.Windows.Forms.TextBox();
+            this.comboBoxCodec = new System.Windows.Forms.ComboBox();
+            this._liftPrivacyMask = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBoxRelated = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.radioButtonDB = new System.Windows.Forms.RadioButton();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBoxPlayback.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.export_groupBox.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBoxDbSettings.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -257,19 +291,10 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Record Utility";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(387, 427);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(103, 23);
-            this.button3.TabIndex = 26;
-            this.button3.Text = "More Utilities > ";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(378, 592);
+            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button4.Location = new System.Drawing.Point(291, 564);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(103, 23);
             this.button4.TabIndex = 27;
@@ -279,7 +304,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.groupBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.button13);
@@ -294,12 +319,43 @@
             this.groupBox3.Controls.Add(this.buttonleft);
             this.groupBox3.Controls.Add(this.buttonRight);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.groupBox3.Location = new System.Drawing.Point(351, 461);
+            this.groupBox3.Location = new System.Drawing.Point(351, 427);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(171, 108);
             this.groupBox3.TabIndex = 26;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Move in steps";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(139, 53);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(9, 13);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "|";
+            // 
+            // button13
+            // 
+            this.button13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button13.Location = new System.Drawing.Point(134, 67);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(20, 23);
+            this.button13.TabIndex = 20;
+            this.button13.Text = "--";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button12.Location = new System.Drawing.Point(134, 29);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(20, 23);
+            this.button12.TabIndex = 19;
+            this.button12.Text = "+";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button11
             // 
@@ -401,36 +457,338 @@
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
             // 
-            // button12
+            // export_groupBox
             // 
-            this.button12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button12.Location = new System.Drawing.Point(134, 29);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(20, 23);
-            this.button12.TabIndex = 19;
-            this.button12.Text = "+";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.export_groupBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.export_groupBox.Controls.Add(this.groupBox2);
+            this.export_groupBox.Controls.Add(this.progressBar);
+            this.export_groupBox.Controls.Add(this.button4);
+            this.export_groupBox.Controls.Add(this.labelError);
+            this.export_groupBox.Controls.Add(this.label10);
+            this.export_groupBox.Controls.Add(this.buttonExport);
+            this.export_groupBox.Controls.Add(this.radioButtonMKV);
+            this.export_groupBox.Controls.Add(this.radioButtonAVI);
+            this.export_groupBox.Controls.Add(this.groupBoxDbSettings);
+            this.export_groupBox.Controls.Add(this.groupBox4);
+            this.export_groupBox.Controls.Add(this.label4);
+            this.export_groupBox.Controls.Add(this.checkBoxRelated);
+            this.export_groupBox.Controls.Add(this.label6);
+            this.export_groupBox.Controls.Add(this.radioButtonDB);
+            this.export_groupBox.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.export_groupBox.Location = new System.Drawing.Point(544, 12);
+            this.export_groupBox.Name = "export_groupBox";
+            this.export_groupBox.Size = new System.Drawing.Size(452, 604);
+            this.export_groupBox.TabIndex = 28;
+            this.export_groupBox.TabStop = false;
+            this.export_groupBox.Text = "Export";
             // 
-            // button13
+            // groupBox2
             // 
-            this.button13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button13.Location = new System.Drawing.Point(134, 67);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(20, 23);
-            this.button13.TabIndex = 20;
-            this.button13.Text = "--";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.groupBox2.Controls.Add(this.dateTimePickerEnd);
+            this.groupBox2.Controls.Add(this.buttonDestination);
+            this.groupBox2.Controls.Add(this.dateTimePickerStart);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox2.Location = new System.Drawing.Point(21, 316);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(407, 130);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Export Selection";
             // 
-            // label1
+            // dateTimePickerEnd
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(139, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(9, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "|";
+            this.dateTimePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dateTimePickerEnd.Location = new System.Drawing.Point(123, 60);
+            this.dateTimePickerEnd.Name = "dateTimePickerEnd";
+            this.dateTimePickerEnd.Size = new System.Drawing.Size(250, 20);
+            this.dateTimePickerEnd.TabIndex = 6;
+            // 
+            // buttonDestination
+            // 
+            this.buttonDestination.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonDestination.Location = new System.Drawing.Point(123, 97);
+            this.buttonDestination.Name = "buttonDestination";
+            this.buttonDestination.Size = new System.Drawing.Size(250, 23);
+            this.buttonDestination.TabIndex = 5;
+            this.buttonDestination.Text = "Select...";
+            this.buttonDestination.UseVisualStyleBackColor = true;
+            this.buttonDestination.Click += new System.EventHandler(this.buttonDestination_Click);
+            // 
+            // dateTimePickerStart
+            // 
+            this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dateTimePickerStart.Location = new System.Drawing.Point(123, 23);
+            this.dateTimePickerStart.Name = "dateTimePickerStart";
+            this.dateTimePickerStart.Size = new System.Drawing.Size(250, 20);
+            this.dateTimePickerStart.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 98);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(92, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Destination folder:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Export interval:";
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(21, 463);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(407, 23);
+            this.progressBar.TabIndex = 21;
+            // 
+            // labelError
+            // 
+            this.labelError.AutoSize = true;
+            this.labelError.Location = new System.Drawing.Point(133, 501);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(0, 13);
+            this.labelError.TabIndex = 28;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(28, 499);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(68, 13);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "Export result:";
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExport.Enabled = false;
+            this.buttonExport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonExport.Location = new System.Drawing.Point(84, 564);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(75, 23);
+            this.buttonExport.TabIndex = 20;
+            this.buttonExport.Text = "Export";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click_1);
+            // 
+            // radioButtonMKV
+            // 
+            this.radioButtonMKV.AutoSize = true;
+            this.radioButtonMKV.Location = new System.Drawing.Point(305, 87);
+            this.radioButtonMKV.Name = "radioButtonMKV";
+            this.radioButtonMKV.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonMKV.TabIndex = 29;
+            this.radioButtonMKV.Text = "MKV";
+            this.radioButtonMKV.UseVisualStyleBackColor = true;
+            this.radioButtonMKV.CheckedChanged += new System.EventHandler(this.radioButtonMKV_CheckedChanged);
+            // 
+            // radioButtonAVI
+            // 
+            this.radioButtonAVI.AutoSize = true;
+            this.radioButtonAVI.Location = new System.Drawing.Point(257, 87);
+            this.radioButtonAVI.Name = "radioButtonAVI";
+            this.radioButtonAVI.Size = new System.Drawing.Size(42, 17);
+            this.radioButtonAVI.TabIndex = 26;
+            this.radioButtonAVI.Text = "AVI";
+            this.radioButtonAVI.UseVisualStyleBackColor = true;
+            this.radioButtonAVI.CheckedChanged += new System.EventHandler(this.radioButtonAVI_CheckedChanged);
+            // 
+            // groupBoxDbSettings
+            // 
+            this.groupBoxDbSettings.Controls.Add(this.checkBoxIncludeBookmark);
+            this.groupBoxDbSettings.Controls.Add(this.checkBoxReExport);
+            this.groupBoxDbSettings.Controls.Add(this.textBoxEncryptPassword);
+            this.groupBoxDbSettings.Controls.Add(this.checkBoxEncrypt);
+            this.groupBoxDbSettings.Controls.Add(this.checkBoxSign);
+            this.groupBoxDbSettings.Controls.Add(this.radioButtonBLK);
+            this.groupBoxDbSettings.Controls.Add(this.radioButtonPIC);
+            this.groupBoxDbSettings.Location = new System.Drawing.Point(31, 109);
+            this.groupBoxDbSettings.Name = "groupBoxDbSettings";
+            this.groupBoxDbSettings.Size = new System.Drawing.Size(183, 177);
+            this.groupBoxDbSettings.TabIndex = 30;
+            this.groupBoxDbSettings.TabStop = false;
+            // 
+            // checkBoxIncludeBookmark
+            // 
+            this.checkBoxIncludeBookmark.AutoSize = true;
+            this.checkBoxIncludeBookmark.Enabled = false;
+            this.checkBoxIncludeBookmark.Location = new System.Drawing.Point(34, 149);
+            this.checkBoxIncludeBookmark.Name = "checkBoxIncludeBookmark";
+            this.checkBoxIncludeBookmark.Size = new System.Drawing.Size(116, 17);
+            this.checkBoxIncludeBookmark.TabIndex = 6;
+            this.checkBoxIncludeBookmark.Text = "Include bookmarks";
+            this.checkBoxIncludeBookmark.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxReExport
+            // 
+            this.checkBoxReExport.AutoSize = true;
+            this.checkBoxReExport.Enabled = false;
+            this.checkBoxReExport.Location = new System.Drawing.Point(34, 126);
+            this.checkBoxReExport.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxReExport.Name = "checkBoxReExport";
+            this.checkBoxReExport.Size = new System.Drawing.Size(107, 17);
+            this.checkBoxReExport.TabIndex = 5;
+            this.checkBoxReExport.Text = "Prevent re-export";
+            this.checkBoxReExport.UseVisualStyleBackColor = true;
+            // 
+            // textBoxEncryptPassword
+            // 
+            this.textBoxEncryptPassword.Enabled = false;
+            this.textBoxEncryptPassword.Location = new System.Drawing.Point(54, 102);
+            this.textBoxEncryptPassword.Name = "textBoxEncryptPassword";
+            this.textBoxEncryptPassword.Size = new System.Drawing.Size(119, 20);
+            this.textBoxEncryptPassword.TabIndex = 4;
+            // 
+            // checkBoxEncrypt
+            // 
+            this.checkBoxEncrypt.AutoSize = true;
+            this.checkBoxEncrypt.Enabled = false;
+            this.checkBoxEncrypt.Location = new System.Drawing.Point(34, 83);
+            this.checkBoxEncrypt.Name = "checkBoxEncrypt";
+            this.checkBoxEncrypt.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxEncrypt.TabIndex = 3;
+            this.checkBoxEncrypt.Text = "Encrypt export";
+            this.checkBoxEncrypt.UseVisualStyleBackColor = true;
+            this.checkBoxEncrypt.CheckedChanged += new System.EventHandler(this.OnEncryptChanged);
+            // 
+            // checkBoxSign
+            // 
+            this.checkBoxSign.AutoSize = true;
+            this.checkBoxSign.Enabled = false;
+            this.checkBoxSign.Location = new System.Drawing.Point(34, 60);
+            this.checkBoxSign.Name = "checkBoxSign";
+            this.checkBoxSign.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxSign.TabIndex = 2;
+            this.checkBoxSign.Text = "Sign export";
+            this.checkBoxSign.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonBLK
+            // 
+            this.radioButtonBLK.AutoSize = true;
+            this.radioButtonBLK.Location = new System.Drawing.Point(12, 37);
+            this.radioButtonBLK.Name = "radioButtonBLK";
+            this.radioButtonBLK.Size = new System.Drawing.Size(93, 17);
+            this.radioButtonBLK.TabIndex = 1;
+            this.radioButtonBLK.Text = "BLK file format";
+            this.radioButtonBLK.UseVisualStyleBackColor = true;
+            this.radioButtonBLK.CheckedChanged += new System.EventHandler(this.OnDBFormatChanged);
+            // 
+            // radioButtonPIC
+            // 
+            this.radioButtonPIC.AutoSize = true;
+            this.radioButtonPIC.Checked = true;
+            this.radioButtonPIC.Location = new System.Drawing.Point(12, 14);
+            this.radioButtonPIC.Name = "radioButtonPIC";
+            this.radioButtonPIC.Size = new System.Drawing.Size(90, 17);
+            this.radioButtonPIC.TabIndex = 0;
+            this.radioButtonPIC.TabStop = true;
+            this.radioButtonPIC.Text = "PIC file format";
+            this.radioButtonPIC.UseVisualStyleBackColor = true;
+            this.radioButtonPIC.CheckedChanged += new System.EventHandler(this.OnDBFormatChanged);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.comboBoxSampleRate);
+            this.groupBox4.Controls.Add(this.textBoxVideoFilename);
+            this.groupBox4.Controls.Add(this.comboBoxCodec);
+            this.groupBox4.Controls.Add(this._liftPrivacyMask);
+            this.groupBox4.Location = new System.Drawing.Point(239, 123);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(189, 150);
+            this.groupBox4.TabIndex = 31;
+            this.groupBox4.TabStop = false;
+            // 
+            // comboBoxSampleRate
+            // 
+            this.comboBoxSampleRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSampleRate.Enabled = false;
+            this.comboBoxSampleRate.FormattingEnabled = true;
+            this.comboBoxSampleRate.Items.AddRange(new object[] {
+            "8000",
+            "16000",
+            "44100"});
+            this.comboBoxSampleRate.Location = new System.Drawing.Point(12, 81);
+            this.comboBoxSampleRate.Name = "comboBoxSampleRate";
+            this.comboBoxSampleRate.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxSampleRate.TabIndex = 10;
+            // 
+            // textBoxVideoFilename
+            // 
+            this.textBoxVideoFilename.Enabled = false;
+            this.textBoxVideoFilename.Location = new System.Drawing.Point(12, 16);
+            this.textBoxVideoFilename.Name = "textBoxVideoFilename";
+            this.textBoxVideoFilename.Size = new System.Drawing.Size(161, 20);
+            this.textBoxVideoFilename.TabIndex = 9;
+            this.textBoxVideoFilename.Text = "Type your avi file name here ...";
+            // 
+            // comboBoxCodec
+            // 
+            this.comboBoxCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCodec.Enabled = false;
+            this.comboBoxCodec.FormattingEnabled = true;
+            this.comboBoxCodec.Location = new System.Drawing.Point(13, 49);
+            this.comboBoxCodec.Name = "comboBoxCodec";
+            this.comboBoxCodec.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxCodec.TabIndex = 10;
+            // 
+            // _liftPrivacyMask
+            // 
+            this._liftPrivacyMask.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._liftPrivacyMask.Location = new System.Drawing.Point(13, 111);
+            this._liftPrivacyMask.Name = "_liftPrivacyMask";
+            this._liftPrivacyMask.Size = new System.Drawing.Size(161, 23);
+            this._liftPrivacyMask.TabIndex = 25;
+            this._liftPrivacyMask.Text = "Lift privacy mask";
+            this._liftPrivacyMask.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 57);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Audio:";
+            // 
+            // checkBoxRelated
+            // 
+            this.checkBoxRelated.AutoSize = true;
+            this.checkBoxRelated.Location = new System.Drawing.Point(141, 57);
+            this.checkBoxRelated.Name = "checkBoxRelated";
+            this.checkBoxRelated.Size = new System.Drawing.Size(165, 17);
+            this.checkBoxRelated.TabIndex = 18;
+            this.checkBoxRelated.Text = "Include related audio devices";
+            this.checkBoxRelated.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Export format:";
+            // 
+            // radioButtonDB
+            // 
+            this.radioButtonDB.AutoSize = true;
+            this.radioButtonDB.Checked = true;
+            this.radioButtonDB.Location = new System.Drawing.Point(91, 86);
+            this.radioButtonDB.Name = "radioButtonDB";
+            this.radioButtonDB.Size = new System.Drawing.Size(71, 17);
+            this.radioButtonDB.TabIndex = 22;
+            this.radioButtonDB.TabStop = true;
+            this.radioButtonDB.Text = "Database";
+            this.radioButtonDB.UseVisualStyleBackColor = true;
+            this.radioButtonDB.CheckedChanged += new System.EventHandler(this.OnDatabaseChanged);
             // 
             // CameraForm
             // 
@@ -441,10 +799,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.BackgroundImage = global::templateTest.Properties.Resources.back2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(542, 627);
+            this.ClientSize = new System.Drawing.Size(1025, 642);
+            this.Controls.Add(this.export_groupBox);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -460,6 +817,14 @@
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.export_groupBox.ResumeLayout(false);
+            this.export_groupBox.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBoxDbSettings.ResumeLayout(false);
+            this.groupBoxDbSettings.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -482,7 +847,6 @@
         private System.Windows.Forms.CheckBox checkBoxDigitalZoom;
         private System.Windows.Forms.Button buttonLiftMask;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonC;
@@ -497,5 +861,36 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.GroupBox export_groupBox;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
+        private System.Windows.Forms.Button buttonDestination;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStart;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label labelError;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.RadioButton radioButtonMKV;
+        private System.Windows.Forms.RadioButton radioButtonAVI;
+        private System.Windows.Forms.GroupBox groupBoxDbSettings;
+        private System.Windows.Forms.CheckBox checkBoxIncludeBookmark;
+        private System.Windows.Forms.CheckBox checkBoxReExport;
+        private System.Windows.Forms.TextBox textBoxEncryptPassword;
+        private System.Windows.Forms.CheckBox checkBoxEncrypt;
+        private System.Windows.Forms.CheckBox checkBoxSign;
+        private System.Windows.Forms.RadioButton radioButtonBLK;
+        private System.Windows.Forms.RadioButton radioButtonPIC;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox comboBoxSampleRate;
+        private System.Windows.Forms.TextBox textBoxVideoFilename;
+        private System.Windows.Forms.ComboBox comboBoxCodec;
+        private System.Windows.Forms.Button _liftPrivacyMask;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBoxRelated;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton radioButtonDB;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

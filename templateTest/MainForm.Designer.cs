@@ -39,7 +39,7 @@ namespace templateTest
             // buttonClose
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClose.Location = new System.Drawing.Point(138, 468);
+            this.buttonClose.Location = new System.Drawing.Point(654, 468);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 0;
@@ -64,7 +64,7 @@ namespace templateTest
             this.time_label.AutoSize = true;
             this.time_label.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.time_label.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.time_label.Location = new System.Drawing.Point(15, 473);
+            this.time_label.Location = new System.Drawing.Point(544, 471);
             this.time_label.Name = "time_label";
             this.time_label.Size = new System.Drawing.Size(63, 13);
             this.time_label.TabIndex = 3;
@@ -90,10 +90,10 @@ namespace templateTest
             // 
             this.generalLog.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.generalLog.ForeColor = System.Drawing.Color.Chartreuse;
-            this.generalLog.Location = new System.Drawing.Point(234, 321);
+            this.generalLog.Location = new System.Drawing.Point(225, 299);
             this.generalLog.Multiline = true;
             this.generalLog.Name = "generalLog";
-            this.generalLog.Size = new System.Drawing.Size(421, 134);
+            this.generalLog.Size = new System.Drawing.Size(504, 156);
             this.generalLog.TabIndex = 4;
             // 
             // MainForm

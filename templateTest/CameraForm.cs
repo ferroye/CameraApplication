@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -8,9 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VideoOS.Platform;
+using VideoOS.Platform.SDK.Export;
 using VideoOS.Platform.Client;
 using VideoOS.Platform.Messaging;
 using VideoOS.Platform.UI;
+using VideoOS.Platform.Util;
+using AVIExporter = VideoOS.Platform.Data.AVIExporter;
 
 
 
@@ -22,10 +27,12 @@ namespace templateTest
         private MainForm mForm;
         private Item selectedItem;
         private double _speed = 0.0;
-        private bool posSizeControl=false;
         private int TogMove;
         private int MValx;
         private int MValy;
+        private string _path = null;
+        private Timer _timer = new Timer() { Interval = 100 };
+        VideoOS.Platform.Data.IExporter _exporter;
 
         enum ServerType { Ccode, Ecode, Unsupported }
         
@@ -34,12 +41,15 @@ namespace templateTest
         {
             selectedItem = selectIt;
             InitializeComponent();
+            comboBoxSampleRate.SelectedIndex = 0;
             mForm = mmForm;
             mForm.generalLog.AppendText("Created Camera Form \r\n");
             EnvironmentManager.Instance.RegisterReceiver(PlaybackTimeChangedHandler,
                                                          new MessageIdFilter(MessageId.SmartClient.PlaybackCurrentTimeIndication));
-            this.Width = 555;
-            this.Height = 666;
+            //this.Width = 555;
+            //this.Height = 666;
+            //posSizeControl = false;
+            //export_groupBox.Hide();
             //ListPresets();
             //checkSetPTZ();
             //ListSequences();
@@ -263,22 +273,7 @@ namespace templateTest
         }
         #endregion
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (posSizeControl)
-            { 
-                this.Width = 555;
-                this.Height = 666;
-                posSizeControl = false;
-            }
-            else
-            {
-                this.Width = 920;
-                this.Height = 666;
-                posSizeControl = true;
-            }
-            
-        }
+       
         #region Camera View Position
         private void buttonUp_Click(object sender, EventArgs e)
         {
@@ -364,8 +359,242 @@ namespace templateTest
         }
 
 
+
         #endregion
 
-        
+        private void _liftPrivacyMask_Click(object sender, EventArgs e)
+        {
+            if (Configuration.Instance.ServerFQID.ServerId.UserContext.PrivacyMaskLifted)
+            {
+                if (Configuration.Instance.ServerFQID.ServerId.UserContext.SetPrivacyMaskLifted(false))
+                    _liftPrivacyMask.Text = "Lift privacy mask";
+            }
+            else
+            {
+                if (Configuration.Instance.ServerFQID.ServerId.UserContext.SetPrivacyMaskLifted(true))
+                    _liftPrivacyMask.Text = "Set privacy mask";
+            }
+        }
+
+        private void radioButtonMKV_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxVideoFilename.Enabled = radioButtonMKV.Checked || radioButtonAVI.Checked;
+            comboBoxCodec.Enabled = radioButtonAVI.Checked;
+        }
+
+        private void OnEncryptChanged(object sender, EventArgs e)
+        {
+            if (checkBoxEncrypt.Checked)
+            {
+                textBoxEncryptPassword.Enabled = true;
+            }
+            else
+            {
+                textBoxEncryptPassword.Enabled = false;
+                textBoxEncryptPassword.Text = "";
+            }
+
+        }
+
+        private void OnDBFormatChanged(object sender, EventArgs e)
+        {
+            checkBoxSign.Enabled = radioButtonBLK.Checked;
+            checkBoxEncrypt.Enabled = radioButtonBLK.Checked;
+            checkBoxReExport.Enabled = radioButtonBLK.Checked;
+            checkBoxIncludeBookmark.Enabled = radioButtonBLK.Checked;
+            OnEncryptChanged(null, null);
+        }
+
+
+        private void radioButtonAVI_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxVideoFilename.Enabled = radioButtonMKV.Checked || radioButtonAVI.Checked;
+            comboBoxCodec.Enabled = radioButtonAVI.Checked;
+            comboBoxSampleRate.Enabled = radioButtonAVI.Checked;
+
+            BuildCodecList();
+        }
+        private void BuildCodecList()
+        {
+            comboBoxCodec.Items.Clear();
+            if (radioButtonAVI.Checked)
+            {
+                AVIExporter tempExporter = new VideoOS.Platform.Data.AVIExporter() { Width = 320, Height = 240, Filename = textBoxVideoFilename.Text };
+                tempExporter.Init();
+                string[] codecList = tempExporter.CodecList;
+                tempExporter.Close();
+                foreach (string name in codecList)
+                {
+                    comboBoxCodec.Items.Add(name);
+                }
+                comboBoxCodec.SelectedIndex = 0;
+            }
+
+        }
+
+        private void OnDatabaseChanged(object sender, EventArgs e)
+        {
+            groupBoxDbSettings.Enabled = radioButtonDB.Checked;
+        }
+        /// <summary>
+        /// Update progress 10 times a second
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShowProgress(object sender, EventArgs e)
+        {
+            if (_exporter != null)
+            {
+                int progress = _exporter.Progress;
+                int lastError = _exporter.LastError;
+                string lastErrorString = _exporter.LastErrorString;
+                if (progress >= 0)
+                {
+                    progressBar.Value = progress;
+                    if (progress == 100)
+                    {
+                        _timer.Stop();
+                        labelError.Text = "Done";
+                        _exporter.EndExport();
+                        _exporter = null;
+                        ///*buttonCancel*/.Enabled = false;
+                    }
+                }
+                if (lastError > 0)
+                {
+                    progressBar.Value = 0;
+                    labelError.Text = lastErrorString + "  ( " + lastError + " )";
+                    if (_exporter != null)
+                    {
+                        _exporter.EndExport();
+                        _exporter = null;
+                        //buttonCancel.Enabled = false;
+                    }
+                }
+            }
+        }
+
+        private void buttonExport_Click_1(object sender, EventArgs e)
+        {
+            bool isStarted = false;
+            List<Item> audioSources = new List<Item>();
+            String destPath = _path;
+
+            if (dateTimePickerStart.Value > dateTimePickerEnd.Value)
+            {
+                MessageBox.Show("Start time need to be lower than end time");
+                return;
+            }
+
+            if (checkBoxRelated.Checked)
+            {
+                audioSources = selectedItem.GetRelated(); // Get the defined related Microphones and Speakers for the selected camera
+                if (EnvironmentManager.Instance.MasterSite.ServerId.ServerType == ServerId.EnterpriseServerType)
+                {
+                    //Enterprise does not record speaker sound
+                    foreach (Item item in audioSources.ToList())
+                    {
+                        if (item.FQID.Kind != Kind.Microphone)
+                        {
+                            audioSources.Remove(item);
+                        }
+                    }
+                }
+            }
+
+            if (radioButtonAVI.Checked)
+            {
+                if (textBoxVideoFilename.Text == "")
+                {
+                    MessageBox.Show("Please enter a filename for the AVI file.", "Enter Filename");
+                    return;
+                }
+                _exporter = new VideoOS.Platform.Data.AVIExporter()
+                {
+                    Filename = textBoxVideoFilename.Text,
+                    Codec = (String)comboBoxCodec.SelectedItem,
+                    AudioSampleRate = Int32.Parse(comboBoxSampleRate.SelectedItem.ToString())
+                };
+
+                destPath = Path.Combine(_path, "Exported Images\\" + selectedItem.Name);
+            }
+            else if (radioButtonMKV.Checked)
+            {
+                if (textBoxVideoFilename.Text == "")
+                {
+                    MessageBox.Show("Please enter a filename for the MKV file.", "Enter Filename");
+                    return;
+                }
+                _exporter = new VideoOS.Platform.Data.MKVExporter() { Filename = textBoxVideoFilename.Text };
+                destPath = Path.Combine(_path, "Exported Images\\" + selectedItem.Name);
+            }
+            else
+            {
+                if (radioButtonPIC.Checked)
+                {
+                    _exporter = new VideoOS.Platform.Data.DBExporter();
+                }
+                else
+                {
+                    if (checkBoxEncrypt.Checked && textBoxEncryptPassword.Text == "")
+                    {
+                        MessageBox.Show("Please enter password to encrypt with.", "Enter Password");
+                        return;
+                    }
+                    _exporter = new VideoOS.Platform.Data.DBExporter(true)
+                    {
+                        Encryption = checkBoxEncrypt.Checked,
+                        EncryptionStrength = VideoOS.Platform.Data.EncryptionStrength.AES128,
+                        Password = textBoxEncryptPassword.Text,
+                        SignExport = checkBoxSign.Checked,
+                        PreventReExport = checkBoxReExport.Checked,
+                        IncludeBookmarks = checkBoxIncludeBookmark.Checked
+                    };
+                }
+            }
+
+            _exporter.Init();
+            _exporter.Path = destPath;
+            _exporter.CameraList = new List<Item>() { selectedItem };
+            _exporter.AudioList = audioSources;
+
+            isStarted = _exporter.StartExport(dateTimePickerStart.Value.ToUniversalTime(), dateTimePickerEnd.Value.ToUniversalTime());
+
+            try
+            {
+                if (isStarted)
+                {
+                    _timer.Tick += ShowProgress;
+                    _timer.Start();
+
+                    buttonExport.Enabled = false;
+                    //buttonCancel.Enabled = true;
+                }
+                else
+                {
+                    int lastError = _exporter.LastError;
+                    string lastErrorString = _exporter.LastErrorString;
+                    labelError.Text = lastErrorString + "  ( " + lastError + " )";
+                    _exporter.EndExport();
+                }
+            }
+            catch (Exception ex)
+            {
+                EnvironmentManager.Instance.ExceptionDialog("Start Export", ex);
+            }
+        }
+
+        private void buttonDestination_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _path = dialog.SelectedPath;
+                buttonDestination.Text = _path;
+
+                if (selectedItem != null && _path != null)
+                    buttonExport.Enabled = true;
+            }
+        }
     }
 }
